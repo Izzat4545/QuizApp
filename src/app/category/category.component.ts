@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './category.component.html',
 })
-export class CategoryComponent {}
+export class CategoryComponent {
+  categories = [
+    { name: 'Category1' },
+    { name: 'Category2' },
+    { name: 'Category3' },
+  ];
+}
