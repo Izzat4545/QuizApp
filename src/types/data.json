@@ -1,0 +1,46 @@
+{
+  "Quiz": {
+    "567": [
+      {
+        "question": "Hello nigga",
+        "firstOption": "Not answer",
+        "secondOption": "Not answer",
+        "thirdOption": "answer",
+        "answer": "answer"
+      },
+      {
+        "question": "second question",
+        "firstOption": "Not answer",
+        "secondOption": "Not answer",
+        "thirdOption": "answer",
+        "answer": "answer"
+      }
+    ],
+    "568": [
+      {
+        "question": "Hello nigga",
+        "firstOption": "Not answer",
+        "secondOption": "Not answer",
+        "thirdOption": "answer",
+        "answer": "answer"
+      },
+      {
+        "question": "THis is my second question",
+        "firstOption": "Not answer",
+        "secondOption": "Not answer",
+        "thirdOption": "answer",
+        "answer": "answer"
+      }
+    ]
+  },
+  "Categories": [
+    {
+      "categoryId": "567",
+      "name": "Niggas"
+    },
+    {
+      "categoryId": "568",
+      "name": "Heheeh"
+    }
+  ]
+}

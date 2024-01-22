@@ -4,6 +4,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FirebaseMethodsService } from '../firebase-methods.service';
+import { Category } from '../../types/response';
 
 @Component({
   selector: 'app-category',
@@ -11,21 +12,16 @@ import { FirebaseMethodsService } from '../firebase-methods.service';
   imports: [MatListModule, MatRippleModule, CommonModule, RouterLink],
   templateUrl: './category.component.html',
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
+  categories: Category[] = [];
+
   ngOnInit() {
-    // You can call the readData method here or in any other lifecycle hook or method
-    this.apiTest();
+    this.getCategory();
   }
-  categories = [
-    { name: 'Category1' },
-    { name: 'Category2' },
-    { name: 'Category3' },
-  ];
 
-  async apiTest() {
+  async getCategory() {
     const dataService = new FirebaseMethodsService();
-    const data = await dataService.readData();
-
-    console.log(data);
+    const data = await dataService.readData('Categories');
+    this.categories = data;
   }
 }

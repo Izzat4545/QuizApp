@@ -1,14 +1,11 @@
 export type Category = {
-  id: number;
+  categoryId: number;
   name: string;
-}[];
-export type Quiz = {
-  id: number;
-  questions: {
-    question: string;
-    firstOption: string;
-    secondOption: string;
-    thirdOption: string;
-    answer: string;
-  }[];
 };
+export type categoryId = {
+  question: string;
+  firstOption: string;
+  secondOption: string;
+  thirdOption: string;
+  answer: string;
+}[];

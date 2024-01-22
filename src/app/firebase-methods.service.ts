@@ -21,16 +21,16 @@ export class FirebaseMethodsService {
   private app = initializeApp(this.firebaseConfig);
   private database = getDatabase(this.app);
 
-  public readData = async () => {
+  public readData = async (path: string) => {
     try {
-      const snapshot = await get(ref(this.database, `test`));
+      const snapshot = await get(ref(this.database, `${path}`));
       return snapshot.val();
     } catch (e) {
       console.log(e);
     }
   };
 
-  postData(data: string) {
+  public postData(data: string) {
     try {
       const tasksRef = ref(this.database, ``);
       set(tasksRef, data);
