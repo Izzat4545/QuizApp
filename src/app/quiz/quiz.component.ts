@@ -7,6 +7,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatRippleModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { ResultModalComponent } from './result-modal/result-modal.component';
 
 @Component({
   selector: 'app-quiz',
@@ -23,7 +25,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class QuizComponent implements OnInit {
   constructor(
     private router: Router,
-    private firebase: FirebaseMethodsService
+    private firebase: FirebaseMethodsService,
+    private dialog: MatDialog
   ) {}
   id: string = '';
   quiz: categoryId = [];
@@ -49,5 +52,12 @@ export class QuizComponent implements OnInit {
     );
     this.statistics.push({ question, selectedAnswer, answer });
     console.log(this.statistics);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ResultModalComponent, {
+      width: '400px', // Set the width of the dialog
+      data: this.statistics,
+    });
   }
 }
