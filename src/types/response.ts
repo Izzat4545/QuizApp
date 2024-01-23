@@ -9,3 +9,9 @@ export type categoryId = {
   thirdOption: string;
   answer: string;
 }[];
+
+export type statistics = {
+  question: string;
+  selectedAnswer: string;
+  answer: string;
+};

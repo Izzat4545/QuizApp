@@ -1,17 +1,22 @@
-<div class="text-center text-[25px] my-5 font-bold">
-  Select Category of questions
+<div class="h-[80vh] flex justify-center items-center" *ngIf="isLoading">
+  <mat-spinner [diameter]="56"></mat-spinner>
 </div>
+<div *ngIf="!isLoading">
+  <div class="text-center text-[25px] my-5 font-bold">
+    Select Category of questions
+  </div>
 
-<div class="container m-auto">
-  <mat-list role="list">
-    <div
-      *ngFor="let category of categories"
-      matRipple
-      class="mb-2 bg-[whitesmoke] rounded-lg"
-    >
-      <a routerLink="{{ category.name.trim() }}-{{ category.categoryId }}"
-        ><mat-list-item role="listitem">{{ category.name }}</mat-list-item></a
+  <div class="container m-auto">
+    <mat-list role="list">
+      <div
+        *ngFor="let category of categories"
+        matRipple
+        class="mb-2 bg-[whitesmoke] rounded-lg"
       >
-    </div>
-  </mat-list>
+        <a routerLink="{{ category.name.trim() }}-{{ category.categoryId }}"
+          ><mat-list-item role="listitem">{{ category.name }}</mat-list-item></a
+        >
+      </div>
+    </mat-list>
+  </div>
 </div>
