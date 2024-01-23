@@ -1,6 +1,13 @@
 <div class="h-[80vh] flex justify-center items-center" *ngIf="isLoading">
   <mat-spinner [diameter]="56"></mat-spinner>
 </div>
+<!-- WILL CHECK LATER -->
+<div
+  class="h-[80vh] flex justify-center items-center"
+  *ngIf="!isLoading && categories === null"
+>
+  Nothing found
+</div>
 <div *ngIf="!isLoading">
   <div class="text-center text-[25px] my-5 font-bold">
     Select Category of questions

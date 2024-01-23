@@ -32,6 +32,7 @@ export class QuizComponent implements OnInit {
   isLoading: boolean = true;
   async getQuiz() {
     this.quiz = await this.firebase.readData('Quiz/' + this.id);
+    console.log(this.quiz);
   }
 
   async ngOnInit(): Promise<void> {
