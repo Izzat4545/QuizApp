@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { get, getDatabase, ref, set } from 'firebase/database';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +43,30 @@ export class FirebaseMethodsService {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  public async logInUser(email: string, password: string): Promise<void> {
+    const auth = getAuth();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+      throw new Error(error.code);
+    }
+  }
+  public logOutUser() {
+    const auth = getAuth();
+    signOut(auth).catch((error) => {
+      console.log(error.message);
+    });
+  }
+
+  public isUserSignedIn(): Promise<boolean> {
+    const auth = getAuth();
+    return new Promise((resolve) => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        unsubscribe(); // Unsubscribe to avoid memory leaks
+        resolve(!!user); // Resolve with true if user is signed in, false otherwise
+      });
+    });
   }
 }

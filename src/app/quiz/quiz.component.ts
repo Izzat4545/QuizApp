@@ -54,7 +54,7 @@ export class QuizComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ResultModalComponent, {
-      width: '400px', // Set the width of the dialog
+      width: '600px', // Set the width of the dialog
       data: this.statistics,
     });
   }

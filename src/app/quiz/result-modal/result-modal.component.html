@@ -4,7 +4,7 @@
     {{ correctAnswers.length }} out of {{ data.length }}
   </div>
   <div *ngFor="let info of data; let i = index" class="py-2">
-    <div>{{ i + 1 }}. {{ info.question }}</div>
+    <div class="text-[18px] mb-1">{{ i + 1 }}. {{ info.question }}</div>
     <div>
       Selected answer:
       <span
