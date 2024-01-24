@@ -7,6 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
+import { Category, categoryId } from '../types/response';
 
 @Injectable({
   providedIn: 'root',
@@ -36,10 +37,10 @@ export class FirebaseMethodsService {
     }
   };
 
-  public postData(data: string) {
+  public async postData(data: Category[] | categoryId, path: string) {
     try {
-      const tasksRef = ref(this.database, ``);
-      set(tasksRef, data);
+      const tasksRef = ref(this.database, path);
+      await set(tasksRef, data);
     } catch (e) {
       console.log(e);
     }

@@ -8,9 +8,12 @@
 >
   Nothing found
 </div>
-<div *ngIf="!isLoading">
+<!-- WILL CHECK LATER END -->
+
+<!-- REGULAR USER VIEW -->
+<div *ngIf="!isLoading && !isAdmin">
   <div class="text-center text-[25px] my-5 font-bold">
-    Select Category of questions
+    Select category of questions
   </div>
 
   <div class="container m-auto w-[320px] sm:w-[350px] md:w-[400px]">
@@ -26,4 +29,42 @@
       </div>
     </mat-list>
   </div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div
+  *ngIf="!isLoading && isAdmin"
+  class="container m-auto w-[320px] sm:w-[350px] md:w-[400px]"
+>
+  <div class="text-center text-[25px] my-5 font-bold">
+    Modify category of questions
+  </div>
+  <form class="flex flex-col">
+    <mat-form-field *ngFor="let category of categories; let i = index">
+      <mat-label>Category name</mat-label>
+      <input
+        matInput
+        [(ngModel)]="category.name"
+        name="{{ i }}"
+        value="{{ category.name }}"
+        required
+      />
+    </mat-form-field>
+    <button
+      matRipple
+      class="bg-blue-400 mb-1 rounded-md text-white py-2"
+      type="button"
+      (click)="addCategory()"
+    >
+      Add category
+    </button>
+    <button
+      (click)="submit()"
+      matRipple
+      class="bg-green-400 rounded-md text-white py-2"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
 </div>
