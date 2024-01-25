@@ -13,4 +13,8 @@
   [quiz]="quiz"
 ></app-client-view>
 
-<app-admin-view [quiz]="quiz" *ngIf="!isLoading && isAdmin"></app-admin-view>
+<app-admin-view
+  [id]="id"
+  [quiz]="quiz"
+  *ngIf="!isLoading && isAdmin"
+></app-admin-view>

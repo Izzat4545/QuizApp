@@ -1,1 +1,117 @@
-<p>admin-view works!</p>
+<div class="container m-auto w-[320px] sm:w-[350px] md:w-[400px]">
+  <div class="text-center text-[25px] my-5 font-bold">Modify questions</div>
+  <form class="flex flex-col">
+    <div class="flex flex-col" *ngFor="let question of quiz; let i = index">
+      <mat-form-field>
+        <mat-label>Question</mat-label>
+        <input
+          matInput
+          [(ngModel)]="question.question"
+          name="{{ i }}"
+          value="{{ question.question }}"
+          required
+          #name="ngModel"
+        />
+        <mat-icon (click)="deleteQuiz(i)" matRipple matSuffix>delete</mat-icon>
+        <mat-error *ngIf="name.errors?.['required']"
+          >Please fill the field</mat-error
+        >
+      </mat-form-field>
+
+      <ul>
+        <li class="list-decimal ml-5 w-[95%]">
+          <mat-form-field class="w-full">
+            <mat-label>First option</mat-label>
+            <input
+              matInput
+              [(ngModel)]="question.firstOption"
+              name="{{ question.firstOption + quiz.length + 1 }}"
+              value="{{ question.firstOption }}"
+              required
+              #name="ngModel"
+            />
+            <mat-icon
+              [ngClass]="{
+                'text-green-400': question.firstOption === question.answer
+              }"
+              (click)="makeItAnswer(i, question.firstOption)"
+              matRipple
+              matSuffix
+              >check</mat-icon
+            >
+            <mat-error *ngIf="name.errors?.['required']"
+              >Please fill the field</mat-error
+            >
+          </mat-form-field>
+        </li>
+        <li class="list-decimal ml-5 w-[95%]">
+          <mat-form-field class="w-full">
+            <mat-label>Second option</mat-label>
+            <input
+              matInput
+              [(ngModel)]="question.secondOption"
+              name="{{ question.secondOption + quiz.length + 1 }}"
+              value="{{ question.secondOption }}"
+              required
+              #name="ngModel"
+            />
+            <mat-icon
+              [ngClass]="{
+                'text-green-400': question.secondOption === question.answer
+              }"
+              (click)="makeItAnswer(i, question.secondOption)"
+              matRipple
+              matSuffix
+              >check</mat-icon
+            >
+            <mat-error *ngIf="name.errors?.['required']"
+              >Please fill the field</mat-error
+            >
+          </mat-form-field>
+        </li>
+        <li class="list-decimal ml-5 w-[95%]">
+          <mat-form-field class="w-full">
+            <mat-label>Third option</mat-label>
+            <input
+              matInput
+              [(ngModel)]="question.thirdOption"
+              name="{{ question.thirdOption + quiz.length + 1 }}"
+              value="{{ question.thirdOption }}"
+              required
+              #name="ngModel"
+            />
+            <mat-icon
+              [ngClass]="{
+                'text-green-400': question.thirdOption === question.answer
+              }"
+              (click)="makeItAnswer(i, question.thirdOption)"
+              matRipple
+              matSuffix
+              >check</mat-icon
+            >
+            <mat-error *ngIf="name.errors?.['required']"
+              >Please fill the field</mat-error
+            >
+          </mat-form-field>
+        </li>
+      </ul>
+    </div>
+    <button
+      matRipple
+      class="bg-blue-400 mb-1 rounded-md text-white py-2"
+      type="button"
+      (click)="addQuiz()"
+    >
+      Add Quiz
+    </button>
+    <button
+      *ngIf="quiz.length > 0"
+      (click)="submit()"
+      matRipple
+      class="bg-green-400 rounded-md text-white py-2"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>

@@ -8,6 +8,7 @@ import { Category } from '../../../types/response';
 import generateSlug from '../../../utils/slugGenerator';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import generateFourDigitId from '../../../utils/idGenarator';
 
 @Component({
   selector: 'app-admin-view',
@@ -55,7 +56,7 @@ export class AdminViewComponent {
   async addCategory() {
     this.categories.push({
       name: '',
-      categoryId: this.categories ? this.categories.length + 1 : 0,
+      categoryId: generateFourDigitId(),
     });
   }
 

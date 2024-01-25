@@ -31,7 +31,7 @@ export class QuizComponent implements OnInit {
   isLoading: boolean = true;
   isAdmin: boolean = false;
   async getQuiz() {
-    this.quiz = await this.firebase.readData('Quiz/' + this.id);
+    this.quiz = (await this.firebase.readData('Quiz/' + this.id)) || [];
     this.isAdmin = await this.firebase.isUserSignedIn();
   }
 
