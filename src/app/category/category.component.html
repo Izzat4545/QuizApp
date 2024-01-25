@@ -1,87 +1,22 @@
 <div class="h-[80vh] flex justify-center items-center" *ngIf="isLoading">
   <mat-spinner [diameter]="56"></mat-spinner>
 </div>
-<!-- WILL CHECK LATER -->
+
 <div
   class="h-[80vh] flex justify-center items-center"
   *ngIf="!isLoading && categories === null && !isAdmin"
 >
   Nothing found
 </div>
-<!-- WILL CHECK LATER END -->
 
 <!-- REGULAR USER VIEW -->
-<div *ngIf="!isLoading && !isAdmin">
-  <div class="text-center text-[25px] my-5 font-bold">
-    Select category of questions
-  </div>
-  <div class="container m-auto w-[320px] sm:w-[350px] md:w-[400px]">
-    <mat-list role="list">
-      <div
-        *ngFor="let category of categories"
-        matRipple
-        class="mb-2 bg-[whitesmoke] rounded-lg"
-      >
-        <a routerLink="{{ category.name.trim() }}-{{ category.categoryId }}"
-          ><mat-list-item role="listitem">{{ category.name }}</mat-list-item></a
-        >
-      </div>
-    </mat-list>
-  </div>
-</div>
+<app-client-view
+  [categories]="categories"
+  *ngIf="!isLoading && !isAdmin"
+></app-client-view>
 
 <!-- ADMIN VIEW -->
-<div
+<app-admin-view
+  [categories]="categories"
   *ngIf="!isLoading && isAdmin"
-  class="container m-auto w-[320px] sm:w-[350px] md:w-[400px]"
->
-  <div class="text-center text-[25px] my-5 font-bold">
-    Modify category of questions
-  </div>
-  <form class="flex flex-col">
-    <mat-form-field *ngFor="let category of categories; let i = index">
-      <mat-label>Category name</mat-label>
-      <input
-        matInput
-        [(ngModel)]="category.name"
-        name="{{ i }}"
-        value="{{ category.name }}"
-        required
-        pattern="^[^0-9]+$"
-        #name="ngModel"
-      />
-      <mat-icon (click)="deleteCategory(i)" matRipple matSuffix
-        >delete</mat-icon
-      >
-      <mat-icon
-        [routerLink]="[generateUrl(category.name, category.categoryId)]"
-        matRipple
-        matSuffix
-        >arrow_forward</mat-icon
-      >
-      <mat-error *ngIf="name.errors?.['required']"
-        >Please fill the field</mat-error
-      >
-      <mat-error *ngIf="name.errors?.['pattern']">
-        Numbers are not allowed in the category name
-      </mat-error>
-    </mat-form-field>
-    <button
-      matRipple
-      class="bg-blue-400 mb-1 rounded-md text-white py-2"
-      type="button"
-      (click)="addCategory()"
-    >
-      Add category
-    </button>
-    <button
-      *ngIf="categories.length > 0"
-      (click)="submit()"
-      matRipple
-      class="bg-green-400 rounded-md text-white py-2"
-      type="submit"
-    >
-      Submit
-    </button>
-  </form>
-</div>
+></app-admin-view>

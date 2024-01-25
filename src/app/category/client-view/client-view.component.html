@@ -1,0 +1,18 @@
+<div>
+  <div class="text-center text-[25px] my-5 font-bold">
+    Select category of questions
+  </div>
+  <div class="container m-auto w-[320px] sm:w-[350px] md:w-[400px]">
+    <mat-list role="list">
+      <div
+        *ngFor="let category of categories"
+        matRipple
+        class="mb-2 bg-[whitesmoke] rounded-lg"
+      >
+        <a routerLink="{{ category.name.trim() }}-{{ category.categoryId }}"
+          ><mat-list-item role="listitem">{{ category.name }}</mat-list-item></a
+        >
+      </div>
+    </mat-list>
+  </div>
+</div>
