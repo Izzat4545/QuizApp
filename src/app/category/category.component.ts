@@ -8,6 +8,9 @@ import { Category } from '../../types/response';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import generateSlug from '../../utils/slugGenerator';
 @Component({
   selector: 'app-category',
   standalone: true,
@@ -19,11 +22,15 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatProgressSpinnerModule,
     FormsModule,
+    MatIconModule,
   ],
   templateUrl: './category.component.html',
 })
 export class CategoryComponent implements OnInit {
-  constructor(private firebase: FirebaseMethodsService) {}
+  constructor(
+    private firebase: FirebaseMethodsService,
+    private snackBar: MatSnackBar
+  ) {}
   categories: Category[] = [];
   isLoading: boolean = true;
   isAdmin: boolean = false;
@@ -38,25 +45,30 @@ export class CategoryComponent implements OnInit {
     const data = await this.firebase.readData('Categories');
     this.categories = data;
   }
-
-  // async updateCategory(index: number, name: string) {
-  //   this.categories[index] = {
-  //     categoryId: this.categories[index].categoryId,
-  //     name: name,
-  //   };
-  //   await this.firebase.postData(this.categories, 'Categories');
-  // }
   async deleteCategory(index: number) {
-    this.categories = this.categories.splice(index, 1);
-    await this.firebase.postData(this.categories, 'Categories');
+    // Create a new array with the elements before and after the deleted index
+    this.categories = [
+      ...this.categories.slice(0, index),
+      ...this.categories.slice(index + 1),
+    ];
   }
 
   async submit() {
+    const hasEmptyName = this.categories.some(
+      (category) => category.name.trim() === ''
+    );
+    if (hasEmptyName) {
+      return;
+    }
     await this.firebase.postData(this.categories, 'Categories');
+    this.snackBar.open('New category added', 'ok', { duration: 3000 });
   }
 
   async addCategory() {
     this.categories.push({ name: '', categoryId: this.categories.length + 1 });
-    await this.firebase.postData(this.categories, 'Categories');
+  }
+
+  generateUrl(url: string, id: number) {
+    return generateSlug(url, id);
   }
 }

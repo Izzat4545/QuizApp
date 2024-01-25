@@ -40,7 +40,7 @@ export class QuizComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const currentPath = this.router.url;
     this.id = parseInt(currentPath.match(/\d+/)?.[0] || '0', 10).toString();
-
+    console.log(this.id);
     await this.getQuiz();
     this.isLoading = false;
   }
