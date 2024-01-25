@@ -51,6 +51,7 @@ export class CategoryComponent implements OnInit {
       ...this.categories.slice(0, index),
       ...this.categories.slice(index + 1),
     ];
+    this.snackBar.open('Category deleted', 'ok', { duration: 3000 });
   }
 
   async submit() {
@@ -64,7 +65,7 @@ export class CategoryComponent implements OnInit {
       return;
     }
     await this.firebase.postData(this.categories, 'Categories');
-    this.snackBar.open('New category added', 'ok', { duration: 3000 });
+    this.snackBar.open('Category updated', 'ok', { duration: 3000 });
   }
 
   async addCategory() {

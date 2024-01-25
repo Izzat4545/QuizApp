@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
+  error = '';
+
   async ngOnInit(): Promise<void> {
     const isLoggedIn = await this.firebase.isUserSignedIn();
     if (isLoggedIn) {
@@ -65,11 +67,16 @@ export class LoginComponent implements OnInit {
 
   async submit() {
     if (this.emailFormControl.value && this.passwordFormControl.value) {
-      await this.firebase.logInUser(
-        this.emailFormControl.value,
-        this.passwordFormControl.value
-      );
-      location.reload();
+      try {
+        await this.firebase.logInUser(
+          this.emailFormControl.value,
+          this.passwordFormControl.value
+        );
+        this.error = '';
+        location.reload();
+      } catch (e: any) {
+        this.error = e.message;
+      }
     }
   }
 }

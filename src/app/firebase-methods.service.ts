@@ -51,7 +51,7 @@ export class FirebaseMethodsService {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
-      throw new Error(error.code);
+      throw new Error(error.message);
     }
   }
   public logOutUser() {
