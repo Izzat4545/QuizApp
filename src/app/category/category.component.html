@@ -4,7 +4,7 @@
 <!-- WILL CHECK LATER -->
 <div
   class="h-[80vh] flex justify-center items-center"
-  *ngIf="!isLoading && categories === null"
+  *ngIf="!isLoading && categories === null && !isAdmin"
 >
   Nothing found
 </div>
@@ -75,6 +75,7 @@
       Add category
     </button>
     <button
+      *ngIf="categories.length > 0"
       (click)="submit()"
       matRipple
       class="bg-green-400 rounded-md text-white py-2"

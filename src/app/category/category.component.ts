@@ -43,7 +43,7 @@ export class CategoryComponent implements OnInit {
 
   async getCategory() {
     const data = await this.firebase.readData('Categories');
-    this.categories = data;
+    this.categories = data || [];
   }
   async deleteCategory(index: number) {
     // Create a new array with the elements before and after the deleted index
@@ -51,6 +51,7 @@ export class CategoryComponent implements OnInit {
       ...this.categories.slice(0, index),
       ...this.categories.slice(index + 1),
     ];
+    await this.firebase.postData(this.categories, 'Categories');
     this.snackBar.open('Category deleted', 'ok', { duration: 3000 });
   }
 
@@ -69,7 +70,10 @@ export class CategoryComponent implements OnInit {
   }
 
   async addCategory() {
-    this.categories.push({ name: '', categoryId: this.categories.length + 1 });
+    this.categories.push({
+      name: '',
+      categoryId: this.categories ? this.categories.length + 1 : 0,
+    });
   }
 
   generateUrl(url: string, id: number) {
