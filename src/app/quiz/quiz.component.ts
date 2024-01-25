@@ -3,59 +3,42 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FirebaseMethodsService } from '../firebase-methods.service';
 import { categoryId, statistics } from '../../types/response';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatRippleModule } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog } from '@angular/material/dialog';
-import { ResultModalComponent } from './result-modal/result-modal.component';
+import { ClientViewComponent } from './client-view/client-view.component';
+import { AdminViewComponent } from './admin-view/admin-view.component';
 
 @Component({
   selector: 'app-quiz',
   standalone: true,
   imports: [
     CommonModule,
-    MatRadioModule,
     MatRippleModule,
-    FormsModule,
     MatProgressSpinnerModule,
+    ClientViewComponent,
+    AdminViewComponent,
   ],
   templateUrl: './quiz.component.html',
 })
 export class QuizComponent implements OnInit {
   constructor(
     private router: Router,
-    private firebase: FirebaseMethodsService,
-    private dialog: MatDialog
+    private firebase: FirebaseMethodsService
   ) {}
   id: string = '';
   quiz: categoryId = [];
-  selectedAnswer: string = '';
   statistics: statistics[] = [];
   isLoading: boolean = true;
+  isAdmin: boolean = false;
   async getQuiz() {
     this.quiz = await this.firebase.readData('Quiz/' + this.id);
+    this.isAdmin = await this.firebase.isUserSignedIn();
   }
 
   async ngOnInit(): Promise<void> {
     const currentPath = this.router.url;
     this.id = parseInt(currentPath.match(/\d+/)?.[0] || '0', 10).toString();
-    console.log(this.id);
     await this.getQuiz();
     this.isLoading = false;
-  }
-
-  collectTheAnswers(question: string, selectedAnswer: string, answer: string) {
-    this.statistics = this.statistics.filter(
-      (stat) => stat.question !== question
-    );
-    this.statistics.push({ question, selectedAnswer, answer });
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ResultModalComponent, {
-      width: '600px', // Set the width of the dialog
-      data: this.statistics,
-    });
   }
 }

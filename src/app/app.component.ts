@@ -18,10 +18,7 @@ import { FirebaseMethodsService } from './firebase-methods.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private firebase: FirebaseMethodsService,
-    private router: Router
-  ) {}
+  constructor(private firebase: FirebaseMethodsService) {}
   title = 'QuizApp';
 
   isLoggedIn: boolean = false;

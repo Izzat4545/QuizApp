@@ -3,58 +3,14 @@
 </div>
 <div
   class="h-[80vh] flex justify-center items-center"
-  *ngIf="!isLoading && quiz === null"
+  *ngIf="!isLoading && quiz === null && !isAdmin"
 >
   Nothing found
 </div>
-<div
-  *ngIf="quiz !== null && !isLoading && quiz.length > 0"
-  class="container m-auto mt-5"
->
-  <div
-    class="w-[320px] sm:w-[350px] md:w-[400px] m-auto"
-    *ngFor="let question of quiz; let i = index"
-  >
-    <div class="text-[18px] my-2">{{ i + 1 }}. {{ question.question }}</div>
-    <mat-radio-group
-      [ngModel]="selectedAnswer"
-      (ngModelChange)="
-        collectTheAnswers(question.question, $event, question.answer)
-      "
-      class="flex flex-col"
-      aria-label="Select an option"
-    >
-      <mat-radio-button
-        class="border hover:border-blue-400 transition-colors my-1 rounded-lg w-[320px] sm:w-[350px] md:w-[400px]"
-        value="{{ question.firstOption }}"
-        ><div class="w-[275px] sm:w-[306px] py-2 md:w-[356px] cursor-pointer">
-          {{ question.firstOption }}
-        </div></mat-radio-button
-      >
-      <mat-radio-button
-        class="border hover:border-blue-400 transition-colors my-1 rounded-lg w-[320px] sm:w-[350px] md:w-[400px]"
-        value="{{ question.secondOption }}"
-        ><div class="w-[275px] sm:w-[306px] py-2 md:w-[356px] cursor-pointer">
-          {{ question.secondOption }}
-        </div>
-      </mat-radio-button>
-      <mat-radio-button
-        class="border hover:border-blue-400 transition-colors my-1 rounded-lg w-[320px] sm:w-[350px] md:w-[400px]"
-        value="{{ question.thirdOption }}"
-        ><div class="w-[275px] sm:w-[306px] py-2 md:w-[356px] cursor-pointer">
-          {{ question.thirdOption }}
-        </div>
-      </mat-radio-button>
-    </mat-radio-group>
-  </div>
-  <button
-    (click)="openDialog()"
-    [disabled]="quiz.length !== statistics.length"
-    class="m-auto flex justify-center mt-2 py-2 px-5 text-white rounded-md"
-    [class.bg-slate-400]="quiz.length !== statistics.length"
-    [class.bg-green-400]="quiz.length === statistics.length"
-    matRipple
-  >
-    Submit
-  </button>
-</div>
+
+<app-client-view
+  *ngIf="quiz !== null && !isLoading && quiz.length > 0 && !isAdmin"
+  [quiz]="quiz"
+></app-client-view>
+
+<app-admin-view [quiz]="quiz" *ngIf="!isLoading && isAdmin"></app-admin-view>
