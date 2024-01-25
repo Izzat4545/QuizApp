@@ -47,6 +47,7 @@
         name="{{ i }}"
         value="{{ category.name }}"
         required
+        pattern="^[^0-9]+$"
         #name="ngModel"
       />
       <mat-icon (click)="deleteCategory(i)" matRipple matSuffix
@@ -61,6 +62,9 @@
       <mat-error *ngIf="name.errors?.['required']"
         >Please fill the field</mat-error
       >
+      <mat-error *ngIf="name.errors?.['pattern']">
+        Numbers are not allowed in the category name
+      </mat-error>
     </mat-form-field>
     <button
       matRipple

@@ -57,7 +57,10 @@ export class CategoryComponent implements OnInit {
     const hasEmptyName = this.categories.some(
       (category) => category.name.trim() === ''
     );
-    if (hasEmptyName) {
+    const hasIntegerInName = this.categories.some((category) =>
+      /\d/.test(category.name)
+    );
+    if (hasEmptyName || hasIntegerInName) {
       return;
     }
     await this.firebase.postData(this.categories, 'Categories');
