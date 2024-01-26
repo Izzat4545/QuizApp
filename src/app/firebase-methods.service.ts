@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { get, getDatabase, ref, set } from 'firebase/database';
+import { get, getDatabase, ref, remove, set } from 'firebase/database';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -69,5 +69,15 @@ export class FirebaseMethodsService {
         resolve(!!user); // Resolve with true if user is signed in, false otherwise
       });
     });
+  }
+
+  public async deleteData(path: string): Promise<void> {
+    try {
+      const databaseRef = ref(this.database, path);
+      await remove(databaseRef);
+    } catch (e) {
+      console.error('Error deleting data:', e);
+      throw e;
+    }
   }
 }

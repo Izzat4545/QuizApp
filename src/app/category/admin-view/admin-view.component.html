@@ -3,22 +3,27 @@
     Modify category of questions
   </div>
   <form class="flex flex-col">
-    <mat-form-field *ngFor="let category of categories; let i = index">
+    <mat-form-field
+      *ngFor="let category of categories; let categoryIndex = index"
+    >
       <mat-label>Category name</mat-label>
       <input
         matInput
         [(ngModel)]="category.name"
-        name="{{ i }}"
+        name="{{ categoryIndex }}"
         value="{{ category.name }}"
         required
         pattern="^[^0-9]+$"
         #name="ngModel"
       />
-      <mat-icon (click)="deleteCategory(i)" matRipple matSuffix
+      <mat-icon
+        (click)="deleteCategory(categoryIndex, category.categoryId)"
+        matRipple
+        matSuffix
         >delete</mat-icon
       >
       <mat-icon
-        [routerLink]="[generateUrl(category.name, category.categoryId)]"
+        (click)="redirectSubmit(category.name, category.categoryId)"
         matRipple
         matSuffix
         >arrow_forward</mat-icon

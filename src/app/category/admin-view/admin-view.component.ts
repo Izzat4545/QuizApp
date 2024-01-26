@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FirebaseMethodsService } from '../../firebase-methods.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Category } from '../../../types/response';
@@ -25,20 +25,37 @@ import generateFourDigitId from '../../../utils/idGenarator';
 export class AdminViewComponent {
   constructor(
     private firebase: FirebaseMethodsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   @Input({ required: true }) categories: Category[] = [];
-  async deleteCategory(index: number) {
+
+  async deleteCategory(categoryIndex: number, quizIndex: number) {
     // Create a new array with the elements before and after the deleted index
     this.categories = [
-      ...this.categories.slice(0, index),
-      ...this.categories.slice(index + 1),
+      ...this.categories.slice(0, categoryIndex),
+      ...this.categories.slice(categoryIndex + 1),
     ];
     await this.firebase.postData(this.categories, 'Categories');
     this.snackBar.open('Category deleted', 'ok', { duration: 3000 });
+    await this.firebase.deleteData('Quiz/' + quizIndex);
   }
 
+  async redirectSubmit(name: string, id: number) {
+    const hasEmptyName = this.categories.some(
+      (category) => category.name.trim() === ''
+    );
+    const hasIntegerInName = this.categories.some((category) =>
+      /\d/.test(category.name)
+    );
+    if (hasEmptyName || hasIntegerInName) {
+      return;
+    }
+
+    await this.firebase.postData(this.categories, 'Categories');
+    this.router.navigate([generateSlug(name, id)]);
+  }
   async submit() {
     const hasEmptyName = this.categories.some(
       (category) => category.name.trim() === ''
@@ -58,9 +75,5 @@ export class AdminViewComponent {
       name: '',
       categoryId: generateFourDigitId(),
     });
-  }
-
-  generateUrl(url: string, id: number) {
-    return generateSlug(url, id);
   }
 }
