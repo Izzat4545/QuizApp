@@ -27,7 +27,6 @@ export class QuizComponent implements OnInit {
   ) {}
   id: string = '';
   quiz: categoryId = [];
-  statistics: statistics[] = [];
   isLoading: boolean = true;
   isAdmin: boolean = false;
   async getQuiz() {

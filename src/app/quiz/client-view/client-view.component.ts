@@ -20,6 +20,7 @@ export class ClientViewComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(ResultModalComponent, {
       width: '600px', // Set the width of the dialog
+      height: '400px',
       data: this.statistics,
     });
   }
