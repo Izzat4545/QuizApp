@@ -23,12 +23,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './admin-view.component.html',
 })
 export class AdminViewComponent {
-  @Input({ required: true }) quiz: categoryId = [];
-  @Input({ required: true }) id: string = '';
   constructor(
     private firebase: FirebaseMethodsService,
     private snackBar: MatSnackBar
   ) {}
+  error = '';
+  @Input({ required: true }) quiz: categoryId = [];
+  @Input({ required: true }) id: string = '';
 
   addQuiz() {
     this.quiz.push({
@@ -50,6 +51,36 @@ export class AdminViewComponent {
   }
 
   async submit() {
+    const hasEmptyAnswer = this.quiz.some(
+      (category) => category.answer.trim() === ''
+    );
+    const hasEmptyQuestion = this.quiz.some(
+      (category) => category.question.trim() === ''
+    );
+    const hasEmptyFirstOption = this.quiz.some(
+      (category) => category.firstOption.trim() === ''
+    );
+    const hasEmptySecondOption = this.quiz.some(
+      (category) => category.secondOption.trim() === ''
+    );
+    const hasEmptyThirdOption = this.quiz.some(
+      (category) => category.thirdOption.trim() === ''
+    );
+    if (
+      hasEmptyQuestion ||
+      hasEmptyFirstOption ||
+      hasEmptySecondOption ||
+      hasEmptyThirdOption
+    ) {
+      return;
+    }
+    if (hasEmptyAnswer) {
+      this.error = 'Please choose correct answer';
+      return;
+    }
+
+    this.error = '';
+
     await this.firebase.postData(this.quiz, 'Quiz/' + this.id);
     this.snackBar.open('Quiz updated', 'ok', { duration: 3000 });
   }
