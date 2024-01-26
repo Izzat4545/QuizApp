@@ -12,7 +12,9 @@
           required
           #name="ngModel"
         />
-        <mat-icon (click)="deleteQuiz(i)" matRipple matSuffix>delete</mat-icon>
+        <mat-icon (click)="deleteQuiz(i, id)" matRipple matSuffix
+          >delete</mat-icon
+        >
         <mat-error *ngIf="name.errors?.['required']"
           >Please fill the field</mat-error
         >

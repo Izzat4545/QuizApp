@@ -44,9 +44,9 @@ export class AdminViewComponent {
   makeItAnswer(index: number, answer: string) {
     this.quiz[index].answer = answer;
   }
-  async deleteQuiz(index: number) {
+  async deleteQuiz(index: number, id: string) {
     this.quiz = [...this.quiz.slice(0, index), ...this.quiz.slice(index + 1)];
-    await this.firebase.postData(this.quiz, 'Quiz');
+    await this.firebase.postData(this.quiz, 'Quiz/' + id);
     this.snackBar.open('Quiz deleted', 'ok', { duration: 3000 });
   }
 
