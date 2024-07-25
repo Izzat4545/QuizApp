@@ -13,8 +13,8 @@ import { Category, categoryId } from '../types/response';
   providedIn: 'root',
 })
 export class FirebaseMethodsService {
-  // Import the functions you need from the SDKs you need
 
+// I know I should't be doing this
   private firebaseConfig = {
     apiKey: 'AIzaSyB66kfiwGzb4T5kyZjrBrkegdpZawQbtSc',
     authDomain: 'quizapp-3e1fe.firebaseapp.com',
